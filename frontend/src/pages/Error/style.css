@@ -1,0 +1,11 @@
+.title-error {
+    font-size: 36px;
+    height: 30vh;
+    display: flex;
+    justify-content: center;
+    align-items:  flex-end;
+}
+
+.link {
+    color: black;;
+}

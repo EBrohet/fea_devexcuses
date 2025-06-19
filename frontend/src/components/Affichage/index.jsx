@@ -1,12 +1,14 @@
 import './style.css';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
+import Error from '../../pages/Error'
 import {phrases} from '../../store/devexcuses';
 console.log(phrases);
 
 function RécupérerPhrase() {
 
+    const { code } = useParams();
     const [phrase, setPhrase] = useState("");
     const navigate = useNavigate();
     let randomIndex = '';
@@ -18,10 +20,14 @@ function RécupérerPhrase() {
     };
 
     return (
+        !code || phrase ? (
         <div>
             <p className='sentence'>{phrase}</p>
             <button onClick={handleClick} className='btn-get'>Afficher une nouvelle phrase</button>
         </div>
+        ) : (
+            <Error />
+        )
     )
 }
 
