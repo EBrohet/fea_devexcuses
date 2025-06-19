@@ -1,3 +1,7 @@
+.title {
+    font-size: 36px;
+}
+
 .sentence {
     height: 40vh;
     display: flex;

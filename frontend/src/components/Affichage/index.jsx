@@ -2,23 +2,8 @@ import './style.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const phrases = [
-    {
-        "http_code": 701,
-        "tag": "inexcusable",
-        "message": "Meh"
-    },
-    {
-        "http_code": 702,
-        "tag": "inexcusable",
-        "message": "Emacs"
-    },
-    {
-        "http_code": 703,
-        "tag": "inexcusable",
-        "message": "Explosion"
-    }
-]
+import {phrases} from '../../store/devexcuses';
+console.log(phrases);
 
 function RécupérerPhrase() {
 
@@ -26,7 +11,7 @@ function RécupérerPhrase() {
     const navigate = useNavigate();
     let randomIndex = '';
 
-    function handleClick() {    
+    function handleClick() { 
         randomIndex = Math.floor(Math.random() * phrases.length);
         setPhrase(phrases[randomIndex].message);
         navigate(`/${phrases[randomIndex].http_code}`);
@@ -44,7 +29,7 @@ function Affichage() {
   
     return (
         <div>
-            <h1>Les excuses de dev</h1>
+            <h1 className='title'>Les excuses de dev</h1>
             <div>{<RécupérerPhrase />}</div>
         </div>
     )
