@@ -1,0 +1,23 @@
+.modale {
+    width: 40vw;
+    height: 30vh;
+}
+
+.btn-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* width: 80%; */
+    align-items: center;
+    margin: 35px;
+}
+
+.text {
+    width: 80%;
+}
