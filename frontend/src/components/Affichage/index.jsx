@@ -11,8 +11,11 @@ function Affichage() {
     const navigate = useNavigate();
     let randomIndex = '';
 
-    function handleClick() { 
+    function handleClick(code) { 
         randomIndex = Math.floor(Math.random() * phrases.length);
+        while (code === phrases[randomIndex].message) {
+            randomIndex = Math.floor(Math.random() * phrases.length);
+        }
         setPhrase(phrases[randomIndex].message);
         navigate(`/${phrases[randomIndex].http_code}`);
     };
@@ -21,7 +24,7 @@ function Affichage() {
         <div>
             <h1 className='title'>Les excuses de dev</h1>
             <p className='sentence'>{phrase}</p>
-            <button onClick={handleClick} className='btn-get btn'>Afficher une excuse</button>
+            <button onClick={() => handleClick(phrase)} className='btn-get btn'>Afficher une excuse</button>
         </div>
     )
 }
