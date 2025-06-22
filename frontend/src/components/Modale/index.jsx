@@ -53,10 +53,12 @@ function BoutonModale() {
             addSentence(phrase);
             phrases.push(phrase);
             navigate(`/${phrase.http_code}`);
+            closeModal();
+        } else {
+            alert("La phrase existe déjà!");
         }
         setNewSentence('');
-        closeModal();
-        console.log(phrase)
+        console.log(phrase);
     }
 
     return (

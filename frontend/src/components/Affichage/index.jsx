@@ -1,12 +1,14 @@
 import './style.css';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { SpinnerCircularFixed } from 'spinners-react';
 
 import {phrases} from '../../store/devexcuses';
 
 function BoutonAffichage({ phrases, nouvPhrase }) {
 
     const [phrasePrec, setPhrasePrec] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     function handleClick() { 
         let randomIndex = Math.floor(Math.random() * phrases.length);
@@ -14,12 +16,21 @@ function BoutonAffichage({ phrases, nouvPhrase }) {
         while (phrasePrec === phraseTrouvee.message && phrases.length > 1) {
             randomIndex = Math.floor(Math.random() * phrases.length);
         }
+        setIsLoading(true);
+        const sentence = document.querySelector(".sentence");
+        const delay = Math.floor(Math.random() * (5000 - 1000)) + 1000;
+        sentence.style.visibility = "hidden";
+        setTimeout(() => {
+            setIsLoading(false);
+            sentence.style.visibility = "visible";
+        }, delay);
         setPhrasePrec(phraseTrouvee.message);
         nouvPhrase(phraseTrouvee);
     };
 
     return (
         <div>
+            <SpinnerCircularFixed enabled={isLoading} className='spinner' />
             <button onClick={handleClick} className='btn-get btn'>Afficher une excuse</button>
         </div>
     )

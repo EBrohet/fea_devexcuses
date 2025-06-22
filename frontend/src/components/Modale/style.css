@@ -1,6 +1,6 @@
 .modale {
     width: 40vw;
-    height: 30vh;
+    height: 22vh;
 }
 
 .btn-close {
@@ -12,12 +12,11 @@
 .form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    /* width: 80%; */
+    gap: 3vh;
     align-items: center;
-    margin: 35px;
 }
 
 .text {
     width: 80%;
+    margin-top: 6vh;
 }
