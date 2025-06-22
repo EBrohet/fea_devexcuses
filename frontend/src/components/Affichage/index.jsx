@@ -1,30 +1,54 @@
 import './style.css';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import {phrases} from '../../store/devexcuses';
-console.log(phrases);
 
-function Affichage() {
+function BoutonAffichage({ phrases, nouvPhrase }) {
 
-    const [phrase, setPhrase] = useState("");
-    const navigate = useNavigate();
-    let randomIndex = '';
+    const [phrasePrec, setPhrasePrec] = useState("");
 
-    function handleClick(code) { 
-        randomIndex = Math.floor(Math.random() * phrases.length);
-        while (code === phrases[randomIndex].message) {
+    function handleClick() { 
+        let randomIndex = Math.floor(Math.random() * phrases.length);
+        const phraseTrouvee = phrases[randomIndex];
+        while (phrasePrec === phraseTrouvee.message && phrases.length > 1) {
             randomIndex = Math.floor(Math.random() * phrases.length);
         }
-        setPhrase(phrases[randomIndex].message);
-        navigate(`/${phrases[randomIndex].http_code}`);
+        setPhrasePrec(phraseTrouvee.message);
+        nouvPhrase(phraseTrouvee);
     };
+
+    return (
+        <div>
+            <button onClick={handleClick} className='btn-get btn'>Afficher une excuse</button>
+        </div>
+    )
+}
+
+function Affichage() {
+    const [phrase, setPhrase] = useState("");
+    const navigate = useNavigate();
+    const { code } = useParams();
+
+    useEffect(() => {
+        if(code) {
+            const phraseCorr = phrases.find(el => el.http_code === parseInt(code));
+            if(phraseCorr) {
+                setPhrase(phraseCorr.message);
+            }
+        }
+    }, [code]);
+
+    const nouvPhrase = (phraseTrouvee) => {
+        setPhrase(phraseTrouvee.message);
+        navigate(`/${phraseTrouvee.http_code}`);
+    }
 
     return (
         <div>
             <h1 className='title'>Les excuses de dev</h1>
             <p className='sentence'>{phrase}</p>
-            <button onClick={() => handleClick(phrase)} className='btn-get btn'>Afficher une excuse</button>
+            <BoutonAffichage phrases={phrases} nouvPhrase={nouvPhrase} />
         </div>
     )
 }

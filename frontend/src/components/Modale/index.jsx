@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 import './style.css';
+import {phrases} from '../../store/devexcuses';
+import { addSentence } from '../../store/devexcuses';
 
 function Modale({ isOpen, handleClose, children }) {
     const dialogRef = useRef(null);
@@ -30,6 +32,8 @@ function BoutonModale() {
     const [isOpen, setIsOpen] = useState(false);
     const [newSentence, setNewSentence] = useState('');
 
+    const navigate = useNavigate();
+
     function closeModal() {
         setIsOpen(false);
     };
@@ -40,27 +44,26 @@ function BoutonModale() {
 
     function handleSubmit(e) {
         e.preventDefault();
-
+        const phrase = {
+            http_code: phrases[phrases.length - 1].http_code + 1,
+            tag: 'Other',
+            message: newSentence
+        };
+        if(!phrases.map(el => el.message).includes(phrase.message)) {
+            addSentence(phrase);
+            phrases.push(phrase);
+            navigate(`/${phrase.http_code}`);
+        }
+        setNewSentence('');
         closeModal();
+        console.log(phrase)
     }
-    console.log(newSentence);
 
     return (
         <div>
             <Modale isOpen={isOpen} handleClose={closeModal}>
                 <form method='post' onSubmit={handleSubmit} className='form'>
                     <input type='text' value={newSentence} onChange={e => setNewSentence(e.target.value)} className='text' placeholder='Saisissez votre phrase ici'></input>
-                    {/* <select name="tag" id="tag">
-                        <option value="Inexcusable"></option>
-                        <option value="Novelty Implementations"></option>
-                        <option value="Edge Cases"></option>
-                        <option value="Fucking"></option>
-                        <option value="Syntax Errors"></option>
-                        <option value="Substance"></option>
-                        <option value="Predictable Problems"></option>
-                        <option value="Somebody Else's Problem"></option>
-                        <option value="Internet crashed"></option>
-                    </select> */}
                     <button type='submit' className='btn-submit btn'> Valider</button>
                 </form>
             </Modale>
