@@ -4,7 +4,7 @@ import './style.css';
 import {phrases} from '../../store/devexcuses';
 import { addSentence } from '../../store/devexcuses';
 
-function Modale({ isOpen, handleClose, children }) {
+function BoutonModale({ isOpen, handleClose, children }) {
     const dialogRef = useRef(null);
 
     function closeModal() {
@@ -28,7 +28,7 @@ function Modale({ isOpen, handleClose, children }) {
     )
 }
 
-function BoutonModale() {
+function Modale() {
     const [isOpen, setIsOpen] = useState(false);
     const [newSentence, setNewSentence] = useState('');
 
@@ -63,15 +63,15 @@ function BoutonModale() {
 
     return (
         <div>
-            <Modale isOpen={isOpen} handleClose={closeModal}>
+            <BoutonModale isOpen={isOpen} handleClose={closeModal}>
                 <form method='post' onSubmit={handleSubmit} className='form'>
                     <input type='text' value={newSentence} onChange={e => setNewSentence(e.target.value)} className='text' placeholder='Saisissez votre phrase ici'></input>
                     <button type='submit' className='btn-submit btn'> Valider</button>
                 </form>
-            </Modale>
+            </BoutonModale>
             <button className='btn-modale btn' onClick={openModal}>Ajouter une nouvelle phrase</button>
         </div>
     )
 }
 
-export default BoutonModale;
+export default Modale;

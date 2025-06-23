@@ -3,12 +3,12 @@
 }
 
 .sentence {
-    height: 40vh;
+    height: 45vh;
     display: flex;
     justify-content: center;
     align-items: flex-end;
     font-size: 48px;
-    margin: 50px;
+    margin: 30px;
 }
 
 .btn {
@@ -26,4 +26,28 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%);
+}
+
+.animation {
+    animation: anim 1000ms 2000ms, fade-in 2000ms ease-in-out;
+}
+
+@keyframes anim {
+    from {
+        transform: translateY(50vh);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(50vh);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(50vh);
+    }
 }

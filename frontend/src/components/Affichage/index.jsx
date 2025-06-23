@@ -7,8 +7,19 @@ import {phrases} from '../../store/devexcuses';
 
 function BoutonAffichage({ phrases, nouvPhrase }) {
 
+    const { code } = useParams();
     const [phrasePrec, setPhrasePrec] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [hide, setHide] = useState('');
+
+    useEffect(() => {
+        if(!code) {
+            setHide('hidden');
+        }
+        setTimeout(() => {
+            setHide('');
+        }, 2000);
+    }, []);
 
     function handleClick() { 
         let randomIndex = Math.floor(Math.random() * phrases.length);
@@ -30,8 +41,8 @@ function BoutonAffichage({ phrases, nouvPhrase }) {
 
     return (
         <div>
-            <SpinnerCircularFixed enabled={isLoading} className='spinner' />
-            <button onClick={handleClick} className='btn-get btn'>Afficher une excuse</button>
+            <SpinnerCircularFixed enabled={isLoading} className='spinner' size='70'/>
+            <button onClick={handleClick} className={`btn-get btn ${hide}`}>Afficher une excuse</button>
         </div>
     )
 }
@@ -40,6 +51,7 @@ function Affichage() {
     const [phrase, setPhrase] = useState("");
     const navigate = useNavigate();
     const { code } = useParams();
+    const [classAnim, setClassAnim] = useState('');
 
     useEffect(() => {
         if(code) {
@@ -47,6 +59,8 @@ function Affichage() {
             if(phraseCorr) {
                 setPhrase(phraseCorr.message);
             }
+        } else {
+            setClassAnim("animation");
         }
     }, [code]);
 
@@ -57,7 +71,7 @@ function Affichage() {
 
     return (
         <div>
-            <h1 className='title'>Les excuses de dev</h1>
+            <h1 className={`title ${classAnim}`}>Les excuses de dev</h1>
             <p className='sentence'>{phrase}</p>
             <BoutonAffichage phrases={phrases} nouvPhrase={nouvPhrase} />
         </div>
